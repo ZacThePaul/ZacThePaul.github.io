@@ -1,0 +1,19 @@
+{
+    "name": "tip-calculator",
+    "version": "1.0.0",
+    "description": "A simple tip calculator with minification support",
+    "main": "index.js",
+    "scripts": {
+        "minify": "node build.js"
+    },
+    "keywords": [
+        "tip calculator",
+        "calculator",
+        "SEO tool"
+    ],
+    "author": "Your Name",
+    "license": "MIT",
+    "devDependencies": {
+        "minify": "^12.0.0"
+    }
+}

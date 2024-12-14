@@ -1,0 +1,1 @@
+run "npm run minify" to minify assets thug. process is based out of build.js

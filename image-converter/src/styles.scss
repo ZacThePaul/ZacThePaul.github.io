@@ -1,0 +1,225 @@
+// Variables
+$desktop-content-width: 1250px;
+$darkest-color: #070F2B;
+$body-background-color: #1B1A55;
+$upload-section-background-color: #535C91;
+$link-color: #9b9ac9;
+$accent-color: #F6B17A;
+
+// Font-face declarations
+@font-face {
+    font-family: 'Inter';
+    src: url('../../uploads/fonts/inter/Inter-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../../uploads/fonts/inter/Inter-Light-BETA.otf') format('opentype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('../../uploads/fonts/merriweather/Merriweather-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('../../uploads/fonts/merriweather/Merriweather-Bold.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+// Body styles
+body {
+    background-color: $body-background-color;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+
+    main {
+        @media screen and (max-width: $desktop-content-width) {
+            width: 95%;
+            margin: auto;
+        }
+    }
+
+    section {
+        background-color: $upload-section-background-color;
+        padding: 35px;
+        border-radius: 5px;
+        box-shadow: 0 0 40px -20px black;
+        margin: 50px 0;
+    }
+
+    h1 {
+        font-family: 'Merriweather', serif;
+        font-weight: 900;
+    }
+
+    h2, h3, h4, h5, h6 {
+        font-family: 'Merriweather', serif;
+        font-weight: 400;
+    }
+
+    p {
+        font-family: 'Inter', sans-serif;
+        font-weight: 100;
+    }
+
+    a {
+        color: $link-color;
+
+        &:hover {
+            color: $accent-color;
+        }
+    }
+    
+}
+
+// Main content
+.main-content {
+    max-width: $desktop-content-width;
+    margin: auto;
+}
+
+// File list styles
+.file-list {
+    margin: 20px 0;
+
+    .file-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        span {
+            flex-grow: 1;
+            margin-left: 10px;
+        }
+
+        select.file-format {
+            margin-left: 10px;
+            padding: 5px;
+            font-size: 14px;
+            background-color: $darkest-color;
+            color: white;
+            border: 1px solid #555;
+            border-radius: 5px;
+            outline: none;
+            appearance: none;
+            cursor: pointer;
+
+            option {
+                background-color: $darkest-color;
+                color: white;
+            }
+        }
+
+        button {
+            margin-left: 5px;
+        }
+    }
+}
+
+// Progress bar styles
+.progress {
+    margin-left: 10px;
+    width: 100px;
+    height: 10px;
+    background: #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+
+    .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: #4caf50;
+        transition: width 0.3s;
+    }
+}
+
+// Upload section
+.upload-section {
+    background-color: $upload-section-background-color;
+    padding: 35px;
+    border-radius: 5px;
+    box-shadow: 0 0 40px -20px black;
+    margin: 50px 0;
+
+    h1, h2 {
+        margin-top: 0;
+        margin-bottom: 5px;
+    }
+
+    .file-input-wrapper {
+        input[type="file"] {
+            display: none; /* Hide the file input */
+        }
+        
+        .custom-file-label {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: $darkest-color;
+            border: 2px solid $darkest-color;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .custom-file-label:hover {
+            background-color: $upload-section-background-color;
+            border-color: $darkest-color;
+        }
+    }
+
+    #convertAllBtn,
+    #clearAllBtn {
+        display: none;
+    }
+}
+
+// Banner section
+.suggested-banner {
+    background-color: $darkest-color;
+    margin-bottom: 50px;
+    padding: 20px 0;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    border-radius: 0;
+    box-shadow: none;
+
+    .suggested-banner-wrapper {
+        max-width: $desktop-content-width;
+        margin: auto;
+
+        @media screen and (max-width: $desktop-content-width) {
+            width: 95%;
+        }
+
+        .tool-links {
+            display: flex;
+            gap: 20px;
+            padding-left: 0;
+
+            li {
+                list-style-type: none;
+            }
+        }
+    }
+}

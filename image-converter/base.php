@@ -7,7 +7,7 @@
 
 <body>
 
-    <?php include __DIR__ . '/header.php' ?>
+    <?php include __DIR__ . '/../header.php' ?>
 
     <div class="main-content">
 
@@ -29,6 +29,6 @@
     </div>
 
   <!-- Include JS -->
-  <script src="/convert-to-webp/dist/scripts.js"></script>
+  <script src="/image-converter/dist/scripts.js"></script>
 </body>
 </html>

@@ -10,12 +10,19 @@ fileInput.addEventListener('change', (event) => {
   const files = Array.from(event.target.files);
   files.forEach((file) => {
     const id = uploadedFiles.length;
-    uploadedFiles.push({ id, file, convertedUrl: null, format: 'png' });
-    addFileToList(id, file);
+    const filename = file.name.replace(/\.\w+$/, ''); // Remove the file extension
+    uploadedFiles.push({ id, file, convertedUrl: null, filename });
+    addFileToList(id, file, filename);
   });
+
+  // Show buttons when files are added
+  if (uploadedFiles.length > 0) {
+    convertAllBtn.style.display = 'inline-block';
+    clearAllBtn.style.display = 'inline-block';
+  }
 });
 
-function addFileToList(id, file) {
+function addFileToList(id, file, filename) {
   const fileItem = document.createElement('div');
   fileItem.className = 'file-item';
   fileItem.dataset.id = id;
@@ -24,14 +31,9 @@ function addFileToList(id, file) {
   fileReader.onload = (e) => {
     fileItem.innerHTML = `
       <img src="${e.target.result}" alt="Image Preview">
-      <span>${file.name}</span>
-      <select class="file-format">
-        <option value="png">PNG</option>
-        <option value="webp">WebP</option>
-        <option value="jpeg">JPEG</option>
-      </select>
+      <span class="editable-filename" contenteditable="true">${filename}</span>
       <button class="convertBtn">Convert</button>
-      <a class="downloadLink" style="display: none;" download="${file.name.replace(/\.\w+$/, '.png')}">Download</a>
+      <a class="downloadLink" style="display: none;" download="${filename}.webp">Download</a>
       <button class="deleteBtn">❌</button>
       <div class="progress">
         <div class="progress-bar"></div>
@@ -40,8 +42,8 @@ function addFileToList(id, file) {
 
     fileList.appendChild(fileItem);
 
-    const formatSelector = fileItem.querySelector('.file-format');
-    formatSelector.addEventListener('change', (event) => updateFileFormat(id, event.target.value));
+    const filenameSpan = fileItem.querySelector('.editable-filename');
+    filenameSpan.addEventListener('input', () => updateFilename(id, filenameSpan.textContent));
 
     const convertBtn = fileItem.querySelector('.convertBtn');
     const downloadLink = fileItem.querySelector('.downloadLink');
@@ -54,16 +56,22 @@ function addFileToList(id, file) {
   fileReader.readAsDataURL(file);
 }
 
-function updateFileFormat(id, format) {
+function updateFilename(id, newFilename) {
   if (uploadedFiles[id]) {
-    uploadedFiles[id].format = format;
+    uploadedFiles[id].filename = newFilename;
+
+    // Update the download link's filename if it exists
+    const fileItem = fileList.querySelector(`[data-id='${id}']`);
+    const downloadLink = fileItem.querySelector('.downloadLink');
+    if (downloadLink) {
+      downloadLink.download = `${newFilename}.webp`;
+    }
   }
 }
 
 function convertFile(id, downloadLink, fileItem) {
   const file = uploadedFiles[id].file;
   const progressBar = fileItem.querySelector('.progress-bar');
-  const format = uploadedFiles[id].format;
 
   const reader = new FileReader();
   reader.onload = (e) => {
@@ -84,11 +92,12 @@ function convertFile(id, downloadLink, fileItem) {
 
         downloadLink.href = convertedUrl;
         downloadLink.style.display = 'inline';
+        const filename = uploadedFiles[id].filename;
+        downloadLink.download = `${filename}.webp`;
         downloadLink.textContent = 'Download';
-        downloadLink.download = file.name.replace(/\.\w+$/, `.${format}`);
         
         progressBar.style.width = '100%';
-      }, `image/${format}`);
+      }, 'image/webp');
     };
   };
 
@@ -106,6 +115,13 @@ function convertFile(id, downloadLink, fileItem) {
 function deleteFile(id, fileItem) {
   uploadedFiles[id] = null;
   fileItem.remove();
+
+  // Hide buttons if no files are left
+  if (uploadedFiles.filter((file) => file !== null).length === 0) {
+    convertAllBtn.style.display = 'none';
+    clearAllBtn.style.display = 'none';
+    bulkDownloadBtn.style.display = 'none'; // Hide bulk download too
+  }
 }
 
 convertAllBtn.addEventListener('click', () => {
@@ -129,7 +145,7 @@ bulkDownloadBtn.addEventListener('click', () => {
       return fetch(file.convertedUrl)
         .then((res) => res.blob())
         .then((blob) => {
-          const fileName = file.file.name.replace(/\.\w+$/, `.${file.format}`);
+          const fileName = `${file.filename}.webp`;
           folder.file(fileName, blob);
         });
     }
@@ -150,4 +166,8 @@ clearAllBtn.addEventListener('click', () => {
   fileList.innerHTML = '';
   uploadedFiles.length = 0;
   bulkDownloadBtn.style.display = 'none';
+
+  // Hide buttons
+  convertAllBtn.style.display = 'none';
+  clearAllBtn.style.display = 'none';
 });

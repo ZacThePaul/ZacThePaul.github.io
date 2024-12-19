@@ -4,7 +4,9 @@
     "description": "A simple tip calculator with minification support",
     "main": "index.js",
     "scripts": {
-        "minify": "node build.js"
+        "minify": "node build.js",
+        "sass:all": "node sass-compiler.js",
+        "compile": "npm run sass:all && npm run minify"
     },
     "keywords": [
         "tip calculator",
@@ -14,6 +16,7 @@
     "author": "Your Name",
     "license": "MIT",
     "devDependencies": {
-        "minify": "^12.0.0"
+        "minify": "^12.0.0",
+        "sass": "^1.83.0"
     }
 }

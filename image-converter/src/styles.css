@@ -1,11 +1,67 @@
 :root { --desktop-content-width: 1250px; }
+:root { --darkest-color: #070F2B; }
+:root { --body-background-color: #1B1A55; }
+:root { --upload-section-background-color: #535C91; }
+:root { --link-color: #9b9ac9; }
+:root { --accent-color: #F6B17A; }
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../../uploads/fonts/inter/Inter-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../../uploads/fonts/inter/Inter-Light-BETA.otf') format('opentype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('../../uploads/fonts/merriweather/Merriweather-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('../../uploads/fonts/merriweather/Merriweather-Bold.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
+}
 
 body {
-    background-color: #2c2b2b;
+    background-color: var(--body-background-color);
     color: white;
-    font-family: arial;
+    font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
+}
+
+h1{
+    font-family: 'Merriweather', serif;
+    font-weight: 900;
+}
+
+h2, h3, h4, h5, h6 {
+    font-family: 'Merriweather', serif;
+    font-weight: 400;
+}
+
+p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 100;
+}
+
+a {
+    color: var(--link-color);
+}
+
+a:hover {
+    color: var(--accent-color);
 }
 
 .main-content {
@@ -40,7 +96,7 @@ body {
     margin-left: 10px;
     padding: 5px;
     font-size: 14px;
-    background-color: #2c2b2b;
+    background-color: var(--darkest-color);
     color: white;
     border: 1px solid #555;
     border-radius: 5px;
@@ -50,7 +106,7 @@ body {
 }
 
 .file-item select.file-format option {
-    background-color: #2c2b2b;
+    background-color: var(--darkest-color);
     color: white;
 }
 
@@ -75,7 +131,7 @@ body {
 }
 
 .upload-section {
-    background-color: #1C1C1C;
+    background-color: var(--upload-section-background-color);
     padding: 35px;
     border-radius: 5px;
     box-shadow: 0 0 40px -20px black;
@@ -89,7 +145,7 @@ body {
 
 /* BANNER SECTION */
 .suggested-banner {
-    background-color: black;
+    background-color: var(--darkest-color);
     margin-bottom: 50px;
     padding: 20px 0;
     width: 100vw; /* Viewport width */

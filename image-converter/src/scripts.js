@@ -10,7 +10,7 @@ fileInput.addEventListener('change', (event) => {
   const files = Array.from(event.target.files);
   files.forEach((file) => {
     const id = uploadedFiles.length;
-    uploadedFiles.push({ id, file, webpUrl: null });
+    uploadedFiles.push({ id, file, convertedUrl: null, format: 'png' });
     addFileToList(id, file);
   });
 });
@@ -25,11 +25,13 @@ function addFileToList(id, file) {
     fileItem.innerHTML = `
       <img src="${e.target.result}" alt="Image Preview">
       <span>${file.name}</span>
-      <label style="margin-left: 10px;">
-        <input type="checkbox" class="retainMetadata" /> Retain Metadata
-      </label>
+      <select class="file-format">
+        <option value="png">PNG</option>
+        <option value="webp">WebP</option>
+        <option value="jpeg">JPEG</option>
+      </select>
       <button class="convertBtn">Convert</button>
-      <a class="downloadLink" style="display: none;" download="${file.name.replace(/\.\w+$/, '.webp')}">Download</a>
+      <a class="downloadLink" style="display: none;" download="${file.name.replace(/\.\w+$/, '.png')}">Download</a>
       <button class="deleteBtn">❌</button>
       <div class="progress">
         <div class="progress-bar"></div>
@@ -37,6 +39,9 @@ function addFileToList(id, file) {
     `;
 
     fileList.appendChild(fileItem);
+
+    const formatSelector = fileItem.querySelector('.file-format');
+    formatSelector.addEventListener('change', (event) => updateFileFormat(id, event.target.value));
 
     const convertBtn = fileItem.querySelector('.convertBtn');
     const downloadLink = fileItem.querySelector('.downloadLink');
@@ -49,10 +54,16 @@ function addFileToList(id, file) {
   fileReader.readAsDataURL(file);
 }
 
+function updateFileFormat(id, format) {
+  if (uploadedFiles[id]) {
+    uploadedFiles[id].format = format;
+  }
+}
+
 function convertFile(id, downloadLink, fileItem) {
   const file = uploadedFiles[id].file;
   const progressBar = fileItem.querySelector('.progress-bar');
-  const retainMetadata = fileItem.querySelector('.retainMetadata').checked;
+  const format = uploadedFiles[id].format;
 
   const reader = new FileReader();
   reader.onload = (e) => {
@@ -68,15 +79,16 @@ function convertFile(id, downloadLink, fileItem) {
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
       canvas.toBlob((blob) => {
-        const webpUrl = URL.createObjectURL(blob);
-        uploadedFiles[id].webpUrl = webpUrl;
+        const convertedUrl = URL.createObjectURL(blob);
+        uploadedFiles[id].convertedUrl = convertedUrl;
 
-        downloadLink.href = webpUrl;
+        downloadLink.href = convertedUrl;
         downloadLink.style.display = 'inline';
         downloadLink.textContent = 'Download';
+        downloadLink.download = file.name.replace(/\.\w+$/, `.${format}`);
         
         progressBar.style.width = '100%';
-      }, 'image/webp');
+      }, `image/${format}`);
     };
   };
 
@@ -98,7 +110,7 @@ function deleteFile(id, fileItem) {
 
 convertAllBtn.addEventListener('click', () => {
   uploadedFiles.forEach((file, id) => {
-    if (file && !file.webpUrl) {
+    if (file && !file.convertedUrl) {
       const fileItem = fileList.querySelector(`[data-id='${id}']`);
       const downloadLink = fileItem.querySelector('.downloadLink');
       convertFile(id, downloadLink, fileItem);
@@ -110,14 +122,14 @@ convertAllBtn.addEventListener('click', () => {
 
 bulkDownloadBtn.addEventListener('click', () => {
   const zip = new JSZip();
-  const folder = zip.folder('converted-webp-files');
+  const folder = zip.folder('converted-files');
 
   const promises = uploadedFiles.map((file, id) => {
-    if (file && file.webpUrl) {
-      return fetch(file.webpUrl)
+    if (file && file.convertedUrl) {
+      return fetch(file.convertedUrl)
         .then((res) => res.blob())
         .then((blob) => {
-          const fileName = file.file.name.replace(/\.\w+$/, '.webp');
+          const fileName = file.file.name.replace(/\.\w+$/, `.${file.format}`);
           folder.file(fileName, blob);
         });
     }
@@ -128,7 +140,7 @@ bulkDownloadBtn.addEventListener('click', () => {
     zip.generateAsync({ type: 'blob' }).then((content) => {
       const link = document.createElement('a');
       link.href = URL.createObjectURL(content);
-      link.download = 'converted-webp-files.zip';
+      link.download = 'converted-files.zip';
       link.click();
     });
   });

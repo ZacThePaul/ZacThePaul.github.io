@@ -1,3 +1,25 @@
+<?php
+
+// Start the sessionr
+session_start();
+
+// Check if the session ID exists, if not, create it
+if (!isset($_SESSION['session_id'])) {
+    $_SESSION['session_id'] = bin2hex(random_bytes(16)); // 32-character session ID
+}
+
+// Send session data to a log file (or database)
+file_put_contents('../analytics.log', json_encode([
+    'session_id' => $_SESSION['session_id'],
+    'url' => $_SERVER['REQUEST_URI'],
+    'referrer' => $_SERVER['HTTP_REFERER'] ?? 'direct',
+    'ip' => $_SERVER['REMOTE_ADDR'],
+    'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+    'timestamp' => date('Y-m-d H:i:s')
+]) . PHP_EOL, FILE_APPEND);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

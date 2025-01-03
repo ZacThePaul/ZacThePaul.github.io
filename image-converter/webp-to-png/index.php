@@ -1,7 +1,7 @@
 <?php     
-    $file_from = "PNG";
-    $file_to = "WEBP";
-    $this_page_url = 'png-to-webp';
+    $file_from = "WEBP";
+    $file_to = "PNG";
+    $this_page_url = 'webp-to-png';
     ob_start(); // Start output buffering
     ?>
 
@@ -13,7 +13,7 @@
         <p>Upload your <?= $file_from ?> images and convert them to <?= $file_to ?> format with just a few clicks.</p>
         <div class="file-input-wrapper">
           <label for="fileInput" class="custom-file-label">Upload Files</label>
-          <input type="file" id="fileInput" accept="image/png" multiple>
+          <input type="file" id="fileInput" accept="image/webp" multiple>
         </div>        
         <div class="file-list" id="fileList"></div>
         <button id="convertAllBtn" class="primary-btn">Convert All</button>

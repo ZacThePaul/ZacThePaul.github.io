@@ -29,6 +29,9 @@
     </div>
 
   <!-- Include JS -->
-  <script src="/image-converter/dist/scripts.js"></script>
+   <script>
+     const toFormat = '<?= $file_to; ?>'.toLowerCase();
+   </script>
+  <script src="/image-converter/dist/scripts.js" defer></script>
 </body>
 </html>

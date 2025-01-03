@@ -118,6 +118,6 @@
   </footer>
 
   <!-- Include JS -->
-  <script src="/convert-to-webp/dist/scripts.js"></script>
+  <script src="/convert-to-webp/dist/scripts.js" defer></script>
 </body>
 </html>

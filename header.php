@@ -12,8 +12,10 @@
             <ul>
                 <li><a href="/" title="Go to Home Page">Home</a></li>
                 <li><a href="/tip-calculator" title="Go to Tip Calculator">Tip Calculator</a></li>
-                <li><a href="/convert-to-webp" title="Go to WEBP Converter">Convert to WEBP</a></li>
                 <li><a href="/image-converter/png-to-webp" title="Go to PNG to WEBP converter">PNG to WEBP</a></li>
+                <li><a href="/image-converter/jpg-to-webp" title="Go to JPG to WEBP converter">JPG to WEBP</a></li>
+                <li><a href="/image-converter/webp-to-png" title="Go to WEB to PNG converter">WEBP to PNG</a></li>
+                <li><a href="/image-converter/webp-to-jpg" title="Go to WEB to JPG converter">WEBP to JPG</a></li>
             </ul>
         </nav>
 

@@ -33,7 +33,7 @@ function addFileToList(id, file, filename) {
       <img src="${e.target.result}" alt="Image Preview">
       <span class="editable-filename" contenteditable="true">${filename}</span>
       <button class="convertBtn">Convert</button>
-      <a class="downloadLink" style="display: none;" download="${filename}.webp">Download</a>
+      <a class="downloadLink" style="display: none;" download="${filename}.${toFormat}">Download</a>
       <button class="deleteBtn">❌</button>
       <div class="progress">
         <div class="progress-bar"></div>
@@ -64,7 +64,7 @@ function updateFilename(id, newFilename) {
     const fileItem = fileList.querySelector(`[data-id='${id}']`);
     const downloadLink = fileItem.querySelector('.downloadLink');
     if (downloadLink) {
-      downloadLink.download = `${newFilename}.webp`;
+      downloadLink.download = `${newFilename}.${toFormat}`;
     }
   }
 }
@@ -93,11 +93,11 @@ function convertFile(id, downloadLink, fileItem) {
         downloadLink.href = convertedUrl;
         downloadLink.style.display = 'inline';
         const filename = uploadedFiles[id].filename;
-        downloadLink.download = `${filename}.webp`;
+        downloadLink.download = `${filename}.${toFormat}`;
         downloadLink.textContent = 'Download';
         
         progressBar.style.width = '100%';
-      }, 'image/webp');
+      }, 'image/' + toFormat);
     };
   };
 
@@ -145,7 +145,7 @@ bulkDownloadBtn.addEventListener('click', () => {
       return fetch(file.convertedUrl)
         .then((res) => res.blob())
         .then((blob) => {
-          const fileName = `${file.filename}.webp`;
+          const fileName = `${file.filename}.${toFormat}`;
           folder.file(fileName, blob);
         });
     }

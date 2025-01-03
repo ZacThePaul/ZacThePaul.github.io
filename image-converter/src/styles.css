@@ -10,6 +10,7 @@
     src: url('../../uploads/fonts/inter/Inter-Regular.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -17,6 +18,7 @@
     src: url('../../uploads/fonts/inter/Inter-Light-BETA.otf') format('opentype');
     font-weight: 100;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -24,6 +26,7 @@
     src: url('../../uploads/fonts/merriweather/Merriweather-Regular.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -31,6 +34,7 @@
     src: url('../../uploads/fonts/merriweather/Merriweather-Bold.otf') format('opentype');
     font-weight: 900;
     font-style: normal;
+    font-display: swap;
 }
 
 body {

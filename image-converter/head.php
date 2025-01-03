@@ -34,10 +34,10 @@
 
   <!-- Include CSS and External Libraries -->
   <link rel="stylesheet" href="/image-converter/dist/styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
 
   <!-- Structured Data (JSON-LD) for Rich Snippets -->
-  <script type="application/ld+json">
+  <script type="application/ld+json" defer>
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",

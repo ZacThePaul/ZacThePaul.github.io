@@ -1,0 +1,37 @@
+.search-result {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0.5em 0;
+}
+
+.search-result-file-title {
+    font-weight: bold;
+    color: var(--text-accent);
+}
+
+.search-result-file-match {
+    margin-left: 1.5em;
+    font-style: italic;
+    padding: 25px 0;
+}
+
+.search-result-file-matched-text {
+    color: var(--text-accent);
+    font-weight: bold;
+}
+
+.search-result-file-match span {
+    display: none; /* Hide all spans initially */
+}
+
+.search-result-file-match span:last-of-type {
+    display: inline; /* Only display the last span */
+    font-style: normal;
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+}
+
+.search-result-file-match span::first-letter {
+    visibility: hidden;
+}
